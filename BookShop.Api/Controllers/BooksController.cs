@@ -5,6 +5,7 @@ using BookShop.Core.Entities;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using BookShop.Infrastructure.Data.Interfaces;
 
 namespace BookShop.Api.Controllers
 {
@@ -12,25 +13,31 @@ namespace BookShop.Api.Controllers
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
-        private readonly ShopContext _shopContext;
+        private readonly IBookRepository _bookRepository;
 
-        public BooksController(ShopContext shopContext)
+        public BooksController(IBookRepository bookRepository)
         {
-            _shopContext = shopContext;
+            _bookRepository = bookRepository;
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<List<Book>>> GetBooks()
         {
-            var books = await _shopContext.Books.ToListAsync();
+            var books = await _bookRepository.GetBooksAsync();
             return Ok(books);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
-            var book = await _shopContext.Books.FindAsync(id);
+            var book = await _bookRepository.GetBookByIdAsync(id);
             return Ok(book);
+        }
+
+        [HttpGet("genres")]
+        public async Task<ActionResult<IReadOnlyList<Genre>>> GetGenres()
+        {
+            return Ok(await _bookRepository.GetGenres());
         }
     }
 }
