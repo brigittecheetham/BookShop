@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using BookShop.Infrastructure.Data.Interfaces;
+using AutoMapper;
+using BookShop.Api.Helpers;
 
 namespace BookShop.Api
 {
@@ -24,6 +26,7 @@ namespace BookShop.Api
             services.AddDbContext<ShopContext>(x => x.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddAutoMapper(typeof(MappingProfiles));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
