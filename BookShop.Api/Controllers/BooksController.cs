@@ -9,6 +9,8 @@ using BookShop.Infrastructure.Data.Interfaces;
 using BookShop.Infrastructure.Data.Specifications;
 using BookShop.Api.Dtos;
 using AutoMapper;
+using BookShop.Api.Errors;
+using Microsoft.AspNetCore.Http;
 
 namespace BookShop.Api.Controllers
 {
@@ -40,10 +42,16 @@ namespace BookShop.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<BookToReturnDto>> GetBook(int id)
         {
             var specification = new BookWithGenreSpecification(id);
             var book = await _bookRepository.GetBySpecAsync(specification);
+
+            if (book == null)
+                return NotFound(new ApiResponse(404));
+
             var bookToReturnDto = _mapper.Map<Book, BookToReturnDto>(book);
             return Ok(bookToReturnDto);
         }
