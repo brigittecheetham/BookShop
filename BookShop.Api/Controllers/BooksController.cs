@@ -11,6 +11,7 @@ using BookShop.Api.Dtos;
 using AutoMapper;
 using BookShop.Api.Errors;
 using Microsoft.AspNetCore.Http;
+using BookShop.Api.Helpers;
 
 namespace BookShop.Api.Controllers
 {
@@ -32,13 +33,15 @@ namespace BookShop.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<BookToReturnDto>>> GetBooks()
+        public async Task<ActionResult<Pagination<BookToReturnDto>>> GetBooks([FromQuery]BooksRetrievalDto booksRetrievalDto)
         {
-            var specification = new BookWithGenreSpecification();
+            var bookSpecificationParameters = _mapper.Map<BooksRetrievalDto, BookSpecificationParameters>(booksRetrievalDto);
+            var specification = new BookWithGenreSpecification(bookSpecificationParameters);
+            var countSpecification = new BookWithFilterForCountSpecification(bookSpecificationParameters);
+            var totalItems = await _bookRepository.CountAsync(countSpecification);
             var books = await _bookRepository.ListAllAsync(specification);
-            var booksToReturn = _mapper.Map<List<Book>, List<BookToReturnDto>>(books.ToList());
-
-            return Ok(booksToReturn);
+            var booksToReturn = _mapper.Map<IReadOnlyList<Book>, IReadOnlyList<BookToReturnDto>>(books.ToList());
+            return Ok(new Pagination<BookToReturnDto>(bookSpecificationParameters.PageIndex,bookSpecificationParameters.PageSize, totalItems, booksToReturn));
         }
 
         [HttpGet("{id}")]

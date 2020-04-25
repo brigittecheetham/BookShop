@@ -16,6 +16,12 @@ namespace BookShop.Infrastructure.Data
         {
             _shopContext = shopContext;
         }
+
+        public async Task<int> CountAsync(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).CountAsync();
+        }
+
         public async Task<T> GetByIdAsync(int id)
         {
             return await _shopContext.Set<T>().FindAsync(id);

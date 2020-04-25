@@ -1,6 +1,7 @@
 using AutoMapper;
 using BookShop.Api.Dtos;
 using BookShop.Core.Entities;
+using BookShop.Infrastructure.Data.Specifications;
 
 namespace BookShop.Api.Helpers
 {
@@ -10,6 +11,7 @@ namespace BookShop.Api.Helpers
         {
             CreateMap<Book,BookToReturnDto>()
             .ForMember(b => b.Genre, o => o.MapFrom(s => s.Genre.Name));
+            CreateMap<BooksRetrievalDto, BookSpecificationParameters>();
         }
     }
 }

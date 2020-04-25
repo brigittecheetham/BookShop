@@ -11,5 +11,6 @@ namespace BookShop.Infrastructure.Data.Interfaces
         public Task<IReadOnlyList<T>> ListAllAsync();
         public Task<T> GetBySpecAsync(ISpecification<T> specification);
         public Task<IReadOnlyList<T>> ListAllAsync(ISpecification<T> specification);
+        public Task<int> CountAsync(ISpecification<T> specification);
     }
 }
