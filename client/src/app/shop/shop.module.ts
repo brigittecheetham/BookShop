@@ -6,15 +6,12 @@ import { SharedModule } from '../shared/shared.module';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { ShopRoutingModule } from './shop-routing.module';
 
-
-
 @NgModule({
   declarations: [ShopComponent, BookClientComponent, BookDetailsComponent],
   imports: [
     CommonModule,
     SharedModule,
     ShopRoutingModule
-  ],
-  //exports: [ShopComponent] dont need after implementing shop rooting module
+  ]
 })
 export class ShopModule { }

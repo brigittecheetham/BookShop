@@ -18,16 +18,16 @@ export class TestErrorComponent implements OnInit {
   }
 
   get404Error() {
-    this.http.get(this.baseUrl + 'books/800').subscribe(response => {
-      console.log('found book');
+    this.http.get(this.baseUrl + 'products/800').subscribe(response => {
+      console.log(response);
     }, error => {
       console.log(error);
     });
   }
 
   get400ValidationError() {
-    this.http.get(this.baseUrl + 'books/eighthundred').subscribe(response => {
-      console.log('found book');
+    this.http.get(this.baseUrl + 'products/eighthundred').subscribe(response => {
+      console.log(response);
     }, error => {
       console.log(error);
     });

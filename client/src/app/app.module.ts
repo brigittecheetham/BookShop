@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
-import { ShopModule } from './shop/shop.module';
 import { HomeModule } from './home/home.module';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 
@@ -19,7 +18,6 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
     HttpClientModule,
     BrowserAnimationsModule,
     CoreModule,
-    //ShopModule, remove it after implementing  shop routing module
     HomeModule
   ],
   providers: [
