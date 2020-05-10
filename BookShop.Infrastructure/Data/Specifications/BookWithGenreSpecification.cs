@@ -9,7 +9,7 @@ namespace BookShop.Infrastructure.Data.Specifications
             (!bookSpecificationParameters.GenreId.HasValue || x.GenreId == bookSpecificationParameters.GenreId))
         {
             AddInclude(x => x.Genre);
-            ApplyPaging(bookSpecificationParameters.PageIndex * bookSpecificationParameters.PageSize - 1, bookSpecificationParameters.PageSize);
+            ApplyPaging(bookSpecificationParameters.PageIndex * bookSpecificationParameters.PageSize, bookSpecificationParameters.PageSize);
 
             if (string.IsNullOrEmpty(bookSpecificationParameters.Sort))
                 return;

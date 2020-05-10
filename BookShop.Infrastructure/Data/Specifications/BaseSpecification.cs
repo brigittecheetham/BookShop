@@ -46,12 +46,16 @@ namespace BookShop.Infrastructure.Data.Specifications
         }
         protected void ApplyPaging(int skip, int take)
         {
-            if (take != 0)
-            {
-                Take = take;
-                Skip = skip;
-                IsPagingEnabled = true;
-            }
+            if (skip < 0) 
+                skip = 0;
+
+            if (take == 0)
+                return;
+
+            Take = take;
+            Skip = skip;
+            IsPagingEnabled = true;
+            
         }
     }
 }
