@@ -18,10 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                         this.router.navigateByUrl('/not-found');
                     }
                     if (error.status === 500) {
-                        this.router.navigateByUrl('/server-error')
-                    }
-                    if (error.status === 400) {
-                        this.router.navigateByUrl('/bad-request')
+                        this.router.navigateByUrl('/server-error');
                     }
                 }
                 return throwError(error);
